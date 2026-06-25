@@ -54,11 +54,50 @@
     .delta-badge.good { color:var(--good); border-color:rgba(115,214,156,.35); }
     .delta-badge.bad { color:var(--bad); border-color:rgba(255,142,142,.35); }
     .delta-badge.flat { color:var(--flat); border-color:rgba(215,180,106,.35); }
+    .viz-kicker { margin:0 0 22px; max-width:780px; }
+    .metric-strip { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:14px; margin:20px 0; }
+    .metric-card { border:1px solid var(--line); border-radius:20px; background:rgba(255,255,255,.04); padding:16px; }
+    .metric-card .label { color:var(--quiet); text-transform:uppercase; letter-spacing:.1em; font-size:10px; font-weight:800; }
+    .metric-card .value { display:block; color:var(--text); font-size:24px; font-weight:800; letter-spacing:-.04em; margin:8px 0 6px; }
+    .metric-card .note { color:var(--muted); font-size:12px; line-height:1.45; }
+    .metric-card.good { border-color:rgba(115,214,156,.28); }
+    .metric-card.bad { border-color:rgba(255,142,142,.3); }
+    .viz-grid { display:grid; grid-template-columns:1.1fr .9fr; gap:16px; align-items:start; }
+    .viz-panel { border:1px solid var(--line); border-radius:22px; background:rgba(255,255,255,.035); padding:18px; }
+    .viz-panel h3 { display:flex; justify-content:space-between; gap:12px; align-items:baseline; }
+    .viz-panel h3 span { color:var(--quiet); font-size:11px; text-transform:uppercase; letter-spacing:.1em; font-weight:800; }
+    .bar-stack { display:grid; gap:12px; margin-top:16px; }
+    .bar-row { display:grid; grid-template-columns:minmax(130px,.75fr) minmax(220px,1.4fr) minmax(74px,.38fr); gap:12px; align-items:center; }
+    .bar-label { color:var(--text); font-weight:700; font-size:13px; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .bar-value { color:var(--muted); font-size:12px; text-align:right; font-variant-numeric:tabular-nums; }
+    .diverge-track { display:grid; grid-template-columns:1fr 1px 1fr; align-items:center; min-height:14px; border-radius:999px; background:rgba(255,255,255,.055); overflow:hidden; }
+    .zero-line { height:22px; background:rgba(255,255,255,.2); }
+    .bar-left,.bar-right { height:12px; }
+    .bar-left { justify-self:end; border-radius:999px 0 0 999px; }
+    .bar-right { justify-self:start; border-radius:0 999px 999px 0; }
+    .bar-fill.good,.bar-right.good,.bar-left.good { background:linear-gradient(90deg,rgba(115,214,156,.66),rgba(115,214,156,.95)); }
+    .bar-fill.bad,.bar-right.bad,.bar-left.bad { background:linear-gradient(90deg,rgba(255,142,142,.9),rgba(255,142,142,.56)); }
+    .paired-row { display:grid; grid-template-columns:minmax(160px,.9fr) minmax(230px,1.3fr); gap:14px; align-items:center; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.07); }
+    .paired-row:last-child { border-bottom:0; }
+    .pair-label strong { display:block; color:var(--text); font-size:13px; }
+    .pair-label span { display:block; color:var(--quiet); font-size:11px; margin-top:3px; }
+    .pair-bars { display:grid; gap:7px; }
+    .pair-line { display:grid; grid-template-columns:38px 1fr 44px; gap:8px; align-items:center; color:var(--quiet); font-size:11px; font-variant-numeric:tabular-nums; }
+    .pair-track { height:9px; border-radius:999px; background:rgba(255,255,255,.065); overflow:hidden; }
+    .pair-track .old { height:100%; border-radius:999px; background:rgba(169,175,186,.58); }
+    .pair-track .new { height:100%; border-radius:999px; background:linear-gradient(90deg,rgba(102,170,255,.68),rgba(102,170,255,.98)); }
+    .coverage-row { display:grid; gap:7px; padding:13px 0; border-bottom:1px solid rgba(255,255,255,.07); }
+    .coverage-row:last-child { border-bottom:0; }
+    .coverage-head { display:flex; justify-content:space-between; gap:12px; color:var(--text); font-size:13px; font-weight:800; }
+    .coverage-head span { color:var(--muted); font-weight:600; }
+    .coverage-track { display:flex; height:14px; border-radius:999px; overflow:hidden; background:rgba(255,255,255,.06); }
+    .coverage-captured { background:linear-gradient(90deg,rgba(102,170,255,.65),rgba(115,214,156,.78)); }
+    .coverage-gap { background:rgba(255,142,142,.42); }
     .region-block { margin-top:18px; padding-top:18px; border-top:1px solid var(--line); }
     .source-url { max-width:260px; overflow-wrap:anywhere; }
     footer { color:var(--quiet); padding:40px 0 70px; font-size:13px; }
     @media (max-width:1100px) { .change-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
-    @media (max-width:900px) { .cards,.summary,.detail-grid,.change-grid { grid-template-columns:1fr; } .old-new { grid-template-columns:1fr; } .arrow { display:none; } .wrap { width:min(100% - 24px,1220px); } section { padding:18px; } }
+    @media (max-width:900px) { .cards,.summary,.detail-grid,.change-grid,.metric-strip,.viz-grid { grid-template-columns:1fr; } .old-new { grid-template-columns:1fr; } .arrow { display:none; } .wrap { width:min(100% - 24px,1220px); } section { padding:18px; } .bar-row,.paired-row { grid-template-columns:1fr; } .bar-value { text-align:left; } }
   </style>
 </head>
 <body>
@@ -149,6 +188,193 @@
       <div class="table-wrap"><table class="delta-table"><thead><tr><th>Region</th><th>Old signal</th><th></th><th>New signal</th><th>Meaning</th><th>Coverage</th></tr></thead><tbody>
         <tr><td><strong>Europe</strong></td><td>Book of Dead (Slots, Play'n GO)</td><td>→</td><td>Big Bass Splash (Reel Kingdom)</td><td>Do not compare numeric values directly because metric changed.</td><td>8 captured / 2 gaps</td></tr><tr><td><strong>Asia</strong></td><td>Aviator (Crash, Spribe)</td><td>→</td><td>Fortune Gems 2 (TaDa Gaming)</td><td>Old list was led by Crash games; new list is slot-only and India-led.</td><td>1 captured / 9 gaps</td></tr><tr><td><strong>North America</strong></td><td>Gates of Olympus Super Scatter (Slots, Pragmatic Play)</td><td>→</td><td>Joker's Jewels (Pragmatic Play)</td><td>Do not compare numeric values directly because metric changed.</td><td>2 captured / 3 gaps</td></tr><tr><td><strong>South America</strong></td><td>Aviator (Crash, Spribe)</td><td>→</td><td>Gates of Olympus Super Scatter (Pragmatic Play)</td><td>Old list was led by Aviator (Crash); new list is slot-only.</td><td>5 captured / 5 gaps</td></tr>
       </tbody></table></div>
+    </section>
+    <section>
+      <h2>Visual delta graphs</h2>
+      <p class="viz-kicker">These charts make the old/new movement easier to scan. They use the same country, slot, and regional rows shown in the detailed tables below.</p>
+      <div class="metric-strip">
+        <div class="metric-card bad"><span class="label">Largest CEB fall</span><strong class="value">Canada</strong><span class="note">-$670M vs May compare set</span></div><div class="metric-card good"><span class="label">Largest CEB gain</span><strong class="value">Turkey</strong><span class="note">+$360M and rank up 1</span></div><div class="metric-card bad"><span class="label">Largest YoY reset</span><strong class="value">Philippines</strong><span class="note">+223.9% to +152.3%</span></div><div class="metric-card good"><span class="label">Slot list change</span><strong class="value">The Dog House</strong><span class="note">New visible slot top-10 entry</span></div>
+      </div>
+      <div class="viz-grid">
+        <div class="viz-panel">
+          <h3>CEB movement by country <span>USD delta</span></h3>
+          <div class="bar-stack">
+            <div class="bar-row">
+                <div class="bar-label" title="Canada">Canada</div>
+                <div class="diverge-track" aria-label="Canada CEB delta -$670.00M">
+                  <div class="bar-left bad" style="width:100.00%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right bad" style="width:0%"></div>
+                </div>
+                <div class="bar-value bad">-$670.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Philippines">Philippines</div>
+                <div class="diverge-track" aria-label="Philippines CEB delta -$590.00M">
+                  <div class="bar-left bad" style="width:88.06%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right bad" style="width:0%"></div>
+                </div>
+                <div class="bar-value bad">-$590.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Turkey">Turkey</div>
+                <div class="diverge-track" aria-label="Turkey CEB delta +$360.00M">
+                  <div class="bar-left good" style="width:0%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right good" style="width:53.73%"></div>
+                </div>
+                <div class="bar-value good">+$360.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="United States">United States</div>
+                <div class="diverge-track" aria-label="United States CEB delta -$220.00M">
+                  <div class="bar-left bad" style="width:32.84%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right bad" style="width:0%"></div>
+                </div>
+                <div class="bar-value bad">-$220.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Australia">Australia</div>
+                <div class="diverge-track" aria-label="Australia CEB delta -$190.00M">
+                  <div class="bar-left bad" style="width:28.36%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right bad" style="width:0%"></div>
+                </div>
+                <div class="bar-value bad">-$190.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Japan">Japan</div>
+                <div class="diverge-track" aria-label="Japan CEB delta -$110.00M">
+                  <div class="bar-left bad" style="width:16.42%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right bad" style="width:0%"></div>
+                </div>
+                <div class="bar-value bad">-$110.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Italy">Italy</div>
+                <div class="diverge-track" aria-label="Italy CEB delta +$90.00M">
+                  <div class="bar-left good" style="width:0%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right good" style="width:13.43%"></div>
+                </div>
+                <div class="bar-value good">+$90.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Indonesia">Indonesia</div>
+                <div class="diverge-track" aria-label="Indonesia CEB delta +$90.00M">
+                  <div class="bar-left good" style="width:0%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right good" style="width:13.43%"></div>
+                </div>
+                <div class="bar-value good">+$90.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="South Africa">South Africa</div>
+                <div class="diverge-track" aria-label="South Africa CEB delta +$90.00M">
+                  <div class="bar-left good" style="width:0%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right good" style="width:13.43%"></div>
+                </div>
+                <div class="bar-value good">+$90.00M</div>
+              </div><div class="bar-row">
+                <div class="bar-label" title="Brazil">Brazil</div>
+                <div class="diverge-track" aria-label="Brazil CEB delta +$70.00M">
+                  <div class="bar-left good" style="width:0%"></div>
+                  <div class="zero-line"></div>
+                  <div class="bar-right good" style="width:10.45%"></div>
+                </div>
+                <div class="bar-value good">+$70.00M</div>
+              </div>
+          </div>
+        </div>
+        <div class="viz-panel">
+          <h3>Regional coverage <span>captured vs gaps</span></h3>
+          <div class="coverage-row">
+            <div class="coverage-head">Europe <span>8 captured / 2 gaps</span></div>
+            <div class="coverage-track" aria-label="Europe coverage 8 captured and 2 gaps">
+              <div class="coverage-captured" style="width:80.00%"></div>
+              <div class="coverage-gap" style="width:20.00%"></div>
+            </div>
+          </div><div class="coverage-row">
+            <div class="coverage-head">Asia <span>1 captured / 9 gaps</span></div>
+            <div class="coverage-track" aria-label="Asia coverage 1 captured and 9 gaps">
+              <div class="coverage-captured" style="width:10.00%"></div>
+              <div class="coverage-gap" style="width:90.00%"></div>
+            </div>
+          </div><div class="coverage-row">
+            <div class="coverage-head">North America <span>2 captured / 3 gaps</span></div>
+            <div class="coverage-track" aria-label="North America coverage 2 captured and 3 gaps">
+              <div class="coverage-captured" style="width:40.00%"></div>
+              <div class="coverage-gap" style="width:60.00%"></div>
+            </div>
+          </div><div class="coverage-row">
+            <div class="coverage-head">South America <span>5 captured / 5 gaps</span></div>
+            <div class="coverage-track" aria-label="South America coverage 5 captured and 5 gaps">
+              <div class="coverage-captured" style="width:50.00%"></div>
+              <div class="coverage-gap" style="width:50.00%"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="viz-panel" style="margin-top:16px">
+        <h3>Global slot brand count shift <span>old gray · new blue</span></h3>
+        <div class="paired-row">
+            <div class="pair-label"><strong>Gates of Olympus</strong><span>Pragmatic Play · brand delta -97</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:100.00%"></div></div><span>1030</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:90.58%"></div></div><span>933</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Gates of Olympus 1000</strong><span>Pragmatic Play · brand delta -6</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:88.74%"></div></div><span>914</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:88.16%"></div></div><span>908</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Sweet Bonanza</strong><span>Pragmatic Play · brand delta -106</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:95.05%"></div></div><span>979</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:84.76%"></div></div><span>873</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Big Bass Splash</strong><span>Reel Kingdom · brand delta -55</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:88.25%"></div></div><span>909</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:82.91%"></div></div><span>854</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Gates of Olympus Super Scatter</strong><span>Pragmatic Play · brand delta -27</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:84.85%"></div></div><span>874</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:82.23%"></div></div><span>847</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Big Bass Bonanza</strong><span>Reel Kingdom · brand delta +17</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:75.44%"></div></div><span>777</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:77.09%"></div></div><span>794</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>The Dog House</strong><span>Pragmatic Play · brand delta N/A</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:0.00%"></div></div><span>N/A</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:76.60%"></div></div><span>789</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Sweet Bonanza 1000</strong><span>Pragmatic Play · brand delta -14</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:75.92%"></div></div><span>782</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:74.56%"></div></div><span>768</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Sugar Rush 1000</strong><span>Pragmatic Play · brand delta +5</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:72.23%"></div></div><span>744</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:72.72%"></div></div><span>749</span></div>
+            </div>
+          </div><div class="paired-row">
+            <div class="pair-label"><strong>Sugar Rush</strong><span>Pragmatic Play · brand delta N/A</span></div>
+            <div class="pair-bars">
+              <div class="pair-line"><span>Old</span><div class="pair-track"><div class="old" style="width:73.88%"></div></div><span>761</span></div>
+              <div class="pair-line"><span>New</span><div class="pair-track"><div class="new" style="width:0.00%"></div></div><span>N/A</span></div>
+            </div>
+          </div>
+      </div>
     </section>
     <section>
       <h2>File and structure inventory</h2>
