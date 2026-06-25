@@ -7,4 +7,4 @@ Public GitHub Pages copy of the Blask HTML version comparison report.
 
 This repository is a shareable HTML-only export. The private source package and raw working data are not included here.
 
-Latest update: added visual delta graphs for country CEB movement, slot brand-count shifts, and regional captured-vs-gap coverage.
+Latest update: added visual delta graphs and explicit data collection dates for each comparison layer.
